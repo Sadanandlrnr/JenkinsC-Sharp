@@ -6,8 +6,10 @@ namespace Single_Click
     public partial class Form1 : Form
     {
         private JenkinsConfigurationSection configSection = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
+        private JenkinsConfigurationSection jenkinsClients = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
 
         Jenkins jenkinsJob = new Jenkins();
+        private string apiToken = null;
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +29,7 @@ namespace Single_Click
 
                     foreach (var job in server.Jobs)
                     {
+                       
                         Console.WriteLine($"  Job Name: {job.Name}");
                     }
                 }
@@ -48,7 +51,10 @@ namespace Single_Click
 
                 foreach (var job in jobCollection)
                 {
-                    Jobs.Items.Add(job.Name);
+                    if(!job.Name.StartsWith("#"))
+                        Jobs.Items.Add(job.Name);
+                    else
+                        apiToken= job.Name.Split('#')[1];
                 }
             }
 
@@ -65,7 +71,9 @@ namespace Single_Click
             dataGridView1.ReadOnly = false;
             dataGridView1.EditMode = DataGridViewEditMode.EditOnEnter;
 
-            jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, "11a2f7d75ab7f62b47673f3c0f5e697140", "PataskarS");
+            // jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, "11dacac6d7d4d8c06de569406216122cf9", "PataskarS");
+
+            jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, apiToken, "PataskarS");
             var buildParameters = await jenkinsJob.GetBuildParametersAsync();
 
             var list = buildParameters.Select(x => new { Key = x.Key, Value = x.Value }).ToList();

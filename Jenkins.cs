@@ -9,19 +9,19 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Single_Click
 {
-   
+
 
     public class Jenkins
     {
         private readonly string jenkinsUrl;
-        private readonly string jobName ;
+        private readonly string jobName;
         // private static readonly string apiToken = "11dea594f1e7d1b0fcff804aafd2d70998";
-        private readonly string apiToken ;
+        private readonly string apiToken;
 
-        private readonly string username ;
+        private readonly string username;
 
         public Dictionary<string, string> JenkinsBuildParamter = new Dictionary<string, string>();
-        public Jenkins(string jenkinsUrl,string jobName,string apiToken,string username)
+        public Jenkins(string jenkinsUrl, string jobName, string apiToken, string username)
         {
             this.jenkinsUrl = jenkinsUrl;
             this.jobName = jobName;
@@ -31,7 +31,7 @@ namespace Single_Click
 
         public Jenkins()
         {
-            
+
         }
 
 
@@ -121,6 +121,29 @@ namespace Single_Click
                 }
             }
         }
-    }
 
+        public async Task StartNewBuildAsync(string jobName)
+        {
+            using (var client = new HttpClient())
+            {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{apiToken}"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var url = $"{jenkinsUrl}/job/{jobName}/build";
+
+                var response = await client.PostAsync(url, null); // Sending a POST request with no content
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("New build started successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to start a new build. Status code: {response.StatusCode}");
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(responseContent);
+                }
+            }
+        }
+    }
 }
