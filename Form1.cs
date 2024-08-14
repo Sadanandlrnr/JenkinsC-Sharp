@@ -1,0 +1,88 @@
+using System.Collections.Generic;
+using System.Configuration;
+
+namespace Single_Click
+{
+    public partial class Form1 : Form
+    {
+        private JenkinsConfigurationSection configSection = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
+
+        Jenkins jenkinsJob = new Jenkins();
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //var configSection = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
+
+            if (configSection != null)
+            {
+                foreach (var server in configSection.JenkinsServers)
+                {
+                    Console.WriteLine($"Jenkins URL: {server.Url}");
+
+                    JenkinsURL.Items.Add(server.Url);
+
+                    foreach (var job in server.Jobs)
+                    {
+                        Console.WriteLine($"  Job Name: {job.Name}");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Jenkins configuration section not found.");
+            }
+
+        }
+
+        private void JenkinsURL_Leave(object sender, EventArgs e)
+        {
+            if (configSection != null)
+            {
+                JobCollection jobCollection = configSection.JenkinsServers.Where(x => x.Url == JenkinsURL.Text).First().Jobs;
+
+
+
+                foreach (var job in jobCollection)
+                {
+                    Jobs.Items.Add(job.Name);
+                }
+            }
+
+        }
+
+        private void JenkinsURL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = false;
+            dataGridView1.EditMode = DataGridViewEditMode.EditOnEnter;
+
+            jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, "11a2f7d75ab7f62b47673f3c0f5e697140", "PataskarS");
+            var buildParameters = await jenkinsJob.GetBuildParametersAsync();
+
+            var list = buildParameters.Select(x => new { Key = x.Key, Value = x.Value }).ToList();
+            dataGridView1.DataSource = list;
+
+            
+
+
+
+
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+           
+            var UpdatedBuildParameters = Helper.ConvertToDictionary(dataGridView1);
+            await jenkinsJob.UpdateBuildParametersAsync(Jobs.Text, UpdatedBuildParameters);
+        }
+    }
+}

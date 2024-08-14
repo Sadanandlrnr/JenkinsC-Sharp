@@ -1,0 +1,21 @@
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Single Click.exe
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Single Click.dll.config
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Single Click.deps.json
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Single Click.runtimeconfig.json
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Single Click.dll
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Single Click.pdb
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single_Click.Form1.resources
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.csproj.GenerateResource.cache
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.AssemblyInfoInputs.cache
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.AssemblyInfo.cs
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.csproj.CoreCompileInputs.cache
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.dll
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\refint\Single Click.dll
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.pdb
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.genruntimeconfig.cache
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\ref\Single Click.dll
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\App.config
+C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.csproj.AssemblyReference.cache
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single C.628C2E0D.Up2Date
