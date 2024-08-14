@@ -69,9 +69,27 @@ namespace Single_Click
             var buildParameters = await jenkinsJob.GetBuildParametersAsync();
 
             var list = buildParameters.Select(x => new { Key = x.Key, Value = x.Value }).ToList();
-            dataGridView1.DataSource = list;
 
-            
+            dataGridView1.Rows.Clear();
+
+            foreach (var lst in list)
+            {
+                dataGridView1.Rows.Add(lst.Key, lst.Value);
+
+
+            }
+            int totalWidth = 0;
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.Width = 400; // Set the width in pixels
+                totalWidth += column.Width;
+            }
+
+            dataGridView1.Width = totalWidth + 50;
+
+
+
+
 
 
 
@@ -80,9 +98,14 @@ namespace Single_Click
 
         private async void button2_Click(object sender, EventArgs e)
         {
-           
+
             var UpdatedBuildParameters = Helper.ConvertToDictionary(dataGridView1);
             await jenkinsJob.UpdateBuildParametersAsync(Jobs.Text, UpdatedBuildParameters);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

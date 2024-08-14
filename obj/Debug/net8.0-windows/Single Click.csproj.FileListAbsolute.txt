@@ -19,3 +19,4 @@ C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windo
 C:\Users\PataskarS\source\repos\Single Click\Single Click\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.csproj.AssemblyReference.cache
 C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single C.628C2E0D.Up2Date
+C:\Users\PataskarS\source\repos\Single Click\Single Click\obj\Debug\net8.0-windows\Single Click.sourcelink.json
