@@ -18,6 +18,8 @@ namespace Single_Click
         private string apiToken = null;
         public Form1()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             InitializeComponent();
             jobMonitor = new JenkinsJobMonitor();
             jobMonitor.JobStatusUpdated += JobMonitor_JobStatusUpdated;

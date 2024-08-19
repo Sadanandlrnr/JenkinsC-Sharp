@@ -225,7 +225,7 @@
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Location = new Point(0, 1035);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1041, 22);
+            statusStrip1.Size = new Size(1006, 22);
             statusStrip1.TabIndex = 13;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -251,7 +251,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1041, 1057);
+            ClientSize = new Size(1006, 1057);
             Controls.Add(lblMessage);
             Controls.Add(label3);
             Controls.Add(statusStrip1);
