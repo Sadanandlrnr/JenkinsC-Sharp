@@ -29,7 +29,7 @@ namespace Single_Click
 
                     foreach (var job in server.Jobs)
                     {
-                       
+
                         Console.WriteLine($"  Job Name: {job.Name}");
                     }
                 }
@@ -45,16 +45,18 @@ namespace Single_Click
         {
             if (configSection != null)
             {
+                Jobs.Items.Clear();
+
                 JobCollection jobCollection = configSection.JenkinsServers.Where(x => x.Url == JenkinsURL.Text).First().Jobs;
 
 
 
                 foreach (var job in jobCollection)
                 {
-                    if(!job.Name.StartsWith("#"))
+                    if (!job.Name.StartsWith("#"))
                         Jobs.Items.Add(job.Name);
                     else
-                        apiToken= job.Name.Split('#')[1];
+                        apiToken = job.Name.Split('#')[1];
                 }
             }
 
@@ -62,7 +64,8 @@ namespace Single_Click
 
         private void JenkinsURL_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            Jobs.Items.Clear();
+            Jobs.Text = null;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -74,7 +77,11 @@ namespace Single_Click
             // jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, "11dacac6d7d4d8c06de569406216122cf9", "PataskarS");
 
             jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, apiToken, "PataskarS");
-            var buildParameters = await jenkinsJob.GetBuildParametersAsync();
+
+
+            // var buildParameters = await jenkinsJob.GetBuildParametersAsync();
+
+            var buildParameters = await jenkinsJob.GetDefaultJobParametersAsync();
 
             var list = buildParameters.Select(x => new { Key = x.Key, Value = x.Value }).ToList();
 
@@ -108,10 +115,20 @@ namespace Single_Click
         {
 
             var UpdatedBuildParameters = Helper.ConvertToDictionary(dataGridView1);
-            await jenkinsJob.UpdateBuildParametersAsync(Jobs.Text, UpdatedBuildParameters);
+            await jenkinsJob.UpdateDefaultJobParametersAsync(UpdatedBuildParameters);
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            await jenkinsJob.StartNewBuildAsync(Jobs.Text);
+        }
+
+        private void Jobs_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

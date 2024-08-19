@@ -1,9 +1,11 @@
-﻿
-using System;
+﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -145,5 +147,114 @@ namespace Single_Click
                 }
             }
         }
+
+
+  
+
+    public async Task<Dictionary<string, string>> GetDefaultJobParametersAsync()
+    {
+            var jobParameters = new Dictionary<string, string>();
+
+            try
+            {
+                // Step 1: Get the job configuration (which contains the default parameters)
+                string jobConfigUrl = $"{jenkinsUrl}/job/{jobName}/config.xml";
+                string jobConfigResponse = await GetJenkinsDataAsync(jobConfigUrl);
+
+                // Remove the XML declaration (e.g., <?xml version="1.1"?>)
+                if (jobConfigResponse.StartsWith("<?xml"))
+                {
+                    int indexOfEndOfDeclaration = jobConfigResponse.IndexOf("?>") + 2;
+                    jobConfigResponse = jobConfigResponse.Substring(indexOfEndOfDeclaration).Trim();
+                }
+
+                // Step 2: Parse the XML using XDocument
+                XDocument xDoc = XDocument.Parse(jobConfigResponse);
+
+                var parameters = xDoc.Descendants("hudson.model.StringParameterDefinition")
+                                     .Select(param => new
+                                     {
+                                         Name = param.Element("name")?.Value,
+                                         DefaultValue = param.Element("defaultValue")?.Value
+                                     });
+
+                foreach (var param in parameters)
+                {
+                    if (param.Name != null && param.DefaultValue != null)
+                    {
+                        Console.WriteLine($"Parameter Name: {param.Name}, Default Value: {param.DefaultValue}");
+                        jobParameters.Add(param.Name, param.DefaultValue);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: " + e.Message);
+            }
+
+            return jobParameters;
     }
+
+   
+
+public async Task UpdateDefaultJobParametersAsync(Dictionary<string, string> newParameters)
+    {
+        try
+        {
+            // Step 1: Get the current job configuration (config.xml)
+            string jobConfigUrl = $"{jenkinsUrl}/job/{jobName}/config.xml";
+            string jobConfigResponse = await GetJenkinsDataAsync(jobConfigUrl);
+
+            // Remove the XML declaration (e.g., <?xml version="1.1"?>) if it exists
+            if (jobConfigResponse.StartsWith("<?xml"))
+            {
+                int indexOfEndOfDeclaration = jobConfigResponse.IndexOf("?>") + 2;
+                jobConfigResponse = jobConfigResponse.Substring(indexOfEndOfDeclaration).Trim();
+            }
+
+            // Step 2: Parse the XML using XDocument
+            XDocument xDoc = XDocument.Parse(jobConfigResponse);
+
+            // Step 3: Find and update the default parameters
+            var parameters = xDoc.Descendants("hudson.model.StringParameterDefinition");
+
+            foreach (var param in parameters)
+            {
+                string paramName = param.Element("name")?.Value;
+                if (paramName != null && newParameters.ContainsKey(paramName))
+                {
+                    param.Element("defaultValue")?.SetValue(newParameters[paramName]);
+                    Console.WriteLine($"Updated Parameter: {paramName}, New Value: {newParameters[paramName]}");
+                }
+            }
+
+                // Step 4: Upload the modified config.xml back to Jenkins
+                using (var httpClient = new HttpClient())
+                {
+                    var byteArray = Encoding.ASCII.GetBytes($"{username}:{apiToken}");
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                    var content = new StringContent(xDoc.ToString(), Encoding.UTF8, "application/xml");
+                    var response = await httpClient.PostAsync($"{jenkinsUrl}/job/{jobName}/config.xml", content);
+                    response.EnsureSuccessStatusCode(); // Throws an exception if the status code isn't successful
+
+                    Console.WriteLine("Job parameters updated successfully.");
+                }
+            }
+        catch (Exception e)
+        {
+            Console.WriteLine("An error occurred: " + e.Message);
+        }
+    }
+
+
+
+
+}   
+
+
+
+
+
+
 }
