@@ -5,20 +5,40 @@ namespace Single_Click
 {
     public partial class Form1 : Form
     {
+        private JenkinsJobMonitor jobMonitor;
+
         private JenkinsConfigurationSection configSection = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
         private JenkinsConfigurationSection jenkinsClients = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
+
+        private string username = null;
 
         Jenkins jenkinsJob = new Jenkins();
         private string apiToken = null;
         public Form1()
         {
             InitializeComponent();
+            jobMonitor = new JenkinsJobMonitor();
+            jobMonitor.JobStatusUpdated += JobMonitor_JobStatusUpdated;
+        }
+
+        private void JobMonitor_JobStatusUpdated(object sender, JobStatusEventArgs e)
+        {
+            // Ensure the UI is updated on the main thread
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => statusTextBox.AppendText(e.StatusMessage + Environment.NewLine)));
+            }
+            else
+            {
+                statusTextBox.AppendText(e.StatusMessage + Environment.NewLine);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             //var configSection = (JenkinsConfigurationSection)ConfigurationManager.GetSection("jenkinsConfiguration");
-
+            ParameterType.Items.Add("Default");
+            ParameterType.Items.Add("LatestBuild");
             if (configSection != null)
             {
                 foreach (var server in configSection.JenkinsServers)
@@ -60,6 +80,14 @@ namespace Single_Click
                 }
             }
 
+            if (JenkinsURL.Text.Contains("localhost:8080"))
+            {
+                username = "sadanandlrnr";
+                apiToken = "11f15a3cc13a855d449e0f1af1e2bc3afb";
+            }
+            else
+                username = "PataskarS";
+
         }
 
         private void JenkinsURL_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,8 +104,11 @@ namespace Single_Click
 
             // jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, "11dacac6d7d4d8c06de569406216122cf9", "PataskarS");
 
-            jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, apiToken, "PataskarS");
+            // jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, apiToken, "PataskarS"); 11f15a3cc13a855d449e0f1af1e2bc3afb
 
+            // Local Jenkins 
+            
+            jenkinsJob = new Jenkins(JenkinsURL.Text, Jobs.Text, apiToken, username);
 
             // var buildParameters = await jenkinsJob.GetBuildParametersAsync();
 
@@ -125,7 +156,10 @@ namespace Single_Click
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            await jenkinsJob.StartNewBuildAsync(Jobs.Text);
+            //await jenkinsJob.StartNewBuildAsync(Jobs.Text);
+            statusTextBox.Text = "";
+
+            await jobMonitor.StartNewBuildAndMonitorWithConsoleOutputAsync(Jobs.Text, JenkinsURL.Text, username, apiToken);
         }
 
         private void Jobs_SelectedIndexChanged(object sender, EventArgs e)

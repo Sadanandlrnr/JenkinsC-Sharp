@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             JenkinsURL = new ComboBox();
@@ -43,14 +42,19 @@
             button3 = new Button();
             label1 = new Label();
             label2 = new Label();
+            statusTextBox = new RichTextBox();
+            groupBox2 = new GroupBox();
+            ParameterType = new ComboBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // JenkinsURL
             // 
             JenkinsURL.FormattingEnabled = true;
-            JenkinsURL.Location = new Point(54, 64);
+            JenkinsURL.Location = new Point(73, 74);
             JenkinsURL.Name = "JenkinsURL";
             JenkinsURL.Size = new Size(393, 33);
             JenkinsURL.TabIndex = 0;
@@ -61,7 +65,7 @@
             // Jobs
             // 
             Jobs.FormattingEnabled = true;
-            Jobs.Location = new Point(559, 64);
+            Jobs.Location = new Point(543, 74);
             Jobs.Name = "Jobs";
             Jobs.Size = new Size(393, 33);
             Jobs.TabIndex = 1;
@@ -69,7 +73,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(1079, 64);
+            button1.Location = new Point(439, 136);
             button1.Name = "button1";
             button1.Size = new Size(112, 35);
             button1.TabIndex = 2;
@@ -91,18 +95,11 @@
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeight = 34;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Parameter, Value });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridView1.Cursor = Cursors.IBeam;
             dataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically;
             dataGridView1.GridColor = SystemColors.ButtonFace;
             dataGridView1.ImeMode = ImeMode.On;
-            dataGridView1.Location = new Point(195, 42);
+            dataGridView1.Location = new Point(18, 43);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(863, 344);
@@ -128,32 +125,33 @@
             // 
             // groupBox1
             // 
-            groupBox1.Anchor = AnchorStyles.Top;
+            groupBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(dataGridView1);
             groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 1, true);
-            groupBox1.Location = new Point(54, 154);
+            groupBox1.Location = new Point(58, 177);
             groupBox1.Name = "groupBox1";
             groupBox1.RightToLeft = RightToLeft.No;
-            groupBox1.Size = new Size(1146, 465);
+            groupBox1.Size = new Size(895, 445);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Build Parameters";
+            groupBox1.Text = "Parameters";
             groupBox1.Enter += groupBox1_Enter;
             // 
             // button2
             // 
-            button2.Location = new Point(491, 410);
+            button2.Location = new Point(318, 393);
             button2.Name = "button2";
             button2.Size = new Size(252, 34);
             button2.TabIndex = 4;
-            button2.Text = "Update Default Parameters";
+            button2.Text = "Update Parameters";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
             // button3
             // 
-            button3.Location = new Point(579, 625);
+            button3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button3.Location = new Point(407, 628);
             button3.Name = "button3";
             button3.Size = new Size(187, 42);
             button3.TabIndex = 5;
@@ -164,7 +162,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(55, 24);
+            label1.Location = new Point(74, 46);
             label1.Name = "label1";
             label1.Size = new Size(104, 25);
             label1.TabIndex = 6;
@@ -173,17 +171,60 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(559, 24);
+            label2.Location = new Point(543, 46);
             label2.Name = "label2";
             label2.Size = new Size(101, 25);
             label2.TabIndex = 7;
             label2.Text = "Jenkins Job";
             // 
+            // statusTextBox
+            // 
+            statusTextBox.BackColor = SystemColors.ActiveBorder;
+            statusTextBox.BorderStyle = BorderStyle.None;
+            statusTextBox.Font = new Font("Consolas", 9F);
+            statusTextBox.ForeColor = SystemColors.Info;
+            statusTextBox.Location = new Point(19, 30);
+            statusTextBox.Name = "statusTextBox";
+            statusTextBox.ReadOnly = true;
+            statusTextBox.Size = new Size(863, 268);
+            statusTextBox.TabIndex = 8;
+            statusTextBox.Text = "";
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(statusTextBox);
+            groupBox2.Location = new Point(54, 669);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(899, 317);
+            groupBox2.TabIndex = 9;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Jenkins Console";
+            // 
+            // ParameterType
+            // 
+            ParameterType.FormattingEnabled = true;
+            ParameterType.Location = new Point(73, 136);
+            ParameterType.Name = "ParameterType";
+            ParameterType.Size = new Size(182, 33);
+            ParameterType.TabIndex = 10;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(71, 110);
+            label4.Name = "label4";
+            label4.Size = new Size(133, 25);
+            label4.TabIndex = 12;
+            label4.Text = "Parameter Type";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1421, 750);
+            ClientSize = new Size(1029, 1019);
+            Controls.Add(label4);
+            Controls.Add(ParameterType);
+            Controls.Add(groupBox2);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button3);
@@ -196,6 +237,7 @@
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -213,5 +255,9 @@
         private DataGridViewTextBoxColumn Value;
         private Label label1;
         private Label label2;
+        private RichTextBox statusTextBox;
+        private GroupBox groupBox2;
+        private ComboBox ParameterType;
+        private Label label4;
     }
 }
