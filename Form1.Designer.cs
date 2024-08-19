@@ -46,6 +46,9 @@
             groupBox2 = new GroupBox();
             ParameterType = new ComboBox();
             label4 = new Label();
+            statusStrip1 = new StatusStrip();
+            label3 = new Label();
+            lblMessage = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -73,7 +76,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(439, 136);
+            button1.Location = new Point(439, 150);
             button1.Name = "button1";
             button1.Size = new Size(112, 35);
             button1.TabIndex = 2;
@@ -129,7 +132,7 @@
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(dataGridView1);
             groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 1, true);
-            groupBox1.Location = new Point(58, 177);
+            groupBox1.Location = new Point(58, 232);
             groupBox1.Name = "groupBox1";
             groupBox1.RightToLeft = RightToLeft.No;
             groupBox1.Size = new Size(895, 445);
@@ -151,7 +154,7 @@
             // button3
             // 
             button3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button3.Location = new Point(407, 628);
+            button3.Location = new Point(412, 683);
             button3.Name = "button3";
             button3.Size = new Size(187, 42);
             button3.TabIndex = 5;
@@ -193,7 +196,7 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(statusTextBox);
-            groupBox2.Location = new Point(54, 669);
+            groupBox2.Location = new Point(58, 729);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(899, 317);
             groupBox2.TabIndex = 9;
@@ -203,7 +206,7 @@
             // ParameterType
             // 
             ParameterType.FormattingEnabled = true;
-            ParameterType.Location = new Point(73, 136);
+            ParameterType.Location = new Point(73, 150);
             ParameterType.Name = "ParameterType";
             ParameterType.Size = new Size(182, 33);
             ParameterType.TabIndex = 10;
@@ -211,17 +214,47 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(71, 110);
+            label4.Location = new Point(71, 124);
             label4.Name = "label4";
             label4.Size = new Size(133, 25);
             label4.TabIndex = 12;
             label4.Text = "Parameter Type";
             // 
+            // statusStrip1
+            // 
+            statusStrip1.ImageScalingSize = new Size(24, 24);
+            statusStrip1.Location = new Point(0, 1035);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1041, 22);
+            statusStrip1.TabIndex = 13;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(74, 198);
+            label3.Name = "label3";
+            label3.Size = new Size(0, 25);
+            label3.TabIndex = 14;
+            // 
+            // lblMessage
+            // 
+            lblMessage.AutoSize = true;
+            lblMessage.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblMessage.ForeColor = SystemColors.Highlight;
+            lblMessage.Location = new Point(71, 198);
+            lblMessage.Name = "lblMessage";
+            lblMessage.Size = new Size(0, 25);
+            lblMessage.TabIndex = 15;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1029, 1019);
+            ClientSize = new Size(1041, 1057);
+            Controls.Add(lblMessage);
+            Controls.Add(label3);
+            Controls.Add(statusStrip1);
             Controls.Add(label4);
             Controls.Add(ParameterType);
             Controls.Add(groupBox2);
@@ -232,6 +265,7 @@
             Controls.Add(button1);
             Controls.Add(Jobs);
             Controls.Add(JenkinsURL);
+            MaximizeBox = false;
             Name = "Form1";
             Text = "Single Click";
             Load += Form1_Load;
@@ -259,5 +293,8 @@
         private GroupBox groupBox2;
         private ComboBox ParameterType;
         private Label label4;
+        private StatusStrip statusStrip1;
+        private Label label3;
+        private Label lblMessage;
     }
 }

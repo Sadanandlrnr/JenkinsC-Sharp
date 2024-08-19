@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Single Click")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23845ba369a3f8752a4532db31baaa5b89480cb8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4b59942f6e171c966b6a34e0f898b8deda6b8c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Single Click")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Single Click")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

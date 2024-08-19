@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Configuration;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Single_Click
 {
@@ -94,6 +96,7 @@ namespace Single_Click
         {
             Jobs.Items.Clear();
             Jobs.Text = null;
+            lblMessage.Text = "";
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -116,22 +119,33 @@ namespace Single_Click
 
             var list = buildParameters.Select(x => new { Key = x.Key, Value = x.Value }).ToList();
 
-            dataGridView1.Rows.Clear();
-
-            foreach (var lst in list)
+            if (list.Count > 0)
             {
-                dataGridView1.Rows.Add(lst.Key, lst.Value);
+                dataGridView1.Rows.Clear();
+
+                foreach (var lst in list)
+                {
+                    dataGridView1.Rows.Add(lst.Key, lst.Value);
 
 
+                }
+                int totalWidth = 0;
+                foreach (DataGridViewColumn column in dataGridView1.Columns)
+                {
+                    column.Width = 400; // Set the width in pixels
+                    totalWidth += column.Width;
+                }
+
+                dataGridView1.Width = totalWidth + 50;
             }
-            int totalWidth = 0;
-            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            else
             {
-                column.Width = 400; // Set the width in pixels
-                totalWidth += column.Width;
-            }
+                dataGridView1.Rows.Clear();
+                lblMessage.Text = "No Parameters are Set !!!";
 
-            dataGridView1.Width = totalWidth + 50;
+                
+                
+            }
 
 
 
@@ -141,6 +155,8 @@ namespace Single_Click
 
 
         }
+
+        
 
         private async void button2_Click(object sender, EventArgs e)
         {
@@ -164,7 +180,26 @@ namespace Single_Click
 
         private void Jobs_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblMessage.Text = "";
+        }
 
+        public static class MessageBoxManager
+        {
+            public static Form CenterOwner { get; set; }
+
+            public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+            {
+                using (Form messageBoxForm = new Form())
+                {
+                    messageBoxForm.StartPosition = FormStartPosition.Manual;
+                    messageBoxForm.Location = new Point(CenterOwner.Left + (CenterOwner.Width - messageBoxForm.Width) / 2,
+                                                        CenterOwner.Top + (CenterOwner.Height - messageBoxForm.Height) / 2);
+                    messageBoxForm.Size = new Size(0, 0); // MessageBox itself will determine size
+                    messageBoxForm.Show();
+
+                    return MessageBox.Show(CenterOwner, text, caption, buttons, icon);
+                }
+            }
         }
     }
 }
